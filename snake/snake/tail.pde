@@ -1,5 +1,6 @@
 static final float VEL_BASE = 5;
 static final int SIZE = 50;
+static final int CHUNK = 5;
 
 class Tail {
    ArrayList<PVector> _tail;
@@ -25,12 +26,18 @@ class Tail {
   }
   
   public void draw() {
-    beginShape();
-    for( int i = 0; i < _tail.size(); i++ )
+
+    for( int i = _tail.size()-1 , s = 255; i >= 0 ; i-=CHUNK, s-=15 )
     {
-       curveVertex(_tail.get(i).x, _tail.get(i).y); 
+      stroke(s); 
+      beginShape();
+      for( int x = 0 ; x < CHUNK && i-x >= 0 ; x++ )
+      {
+          curveVertex(_tail.get(i-x).x, _tail.get(i-x).y);   
+      }
+      endShape();
     }
-    endShape();
+    
   }
   
 }
